@@ -1,3 +1,6 @@
+let todasSeries = [];
+let filtrados = [];
+
 const campoBusca = document.getElementById('campoBusca');
 const btnBuscar = document.getElementById('btnBuscar');
 const listaSeries = document.getElementById('listaSeries');
@@ -28,7 +31,7 @@ function renderizarSeries(series) {
                 <h3>${serie.titulo}</h3>
                 ${serie.ano ? `<p class="serie-ano">${serie.ano}</p>` : ''}
                 ${serie.generos.length ? `<div class="serie-generos">${serie.generos.map(g => `<span class="genero-tag">${g}</span>`).join('')}</div>` : ''}
-                ${serie.sinopse ? `<p class="serie-sinopse">${serie.sinopse.replace(/<[^>]*>/g, '')}</p>` : ''}
+                ${serie.sinopse ? `<p class="serie-sinopse">${serie.sinopse.replace(/<[^>]*>/g, '').slice(0, 200)}${serie.sinopse.replace(/<[^>]*>/g, '').length > 200 ? '...' : ''}</p>` : ''}
                 <div class="serie-meta">
                     ${serie.avaliacao ? `<span class="serie-avaliacao">${'★'.repeat(Math.round(serie.avaliacao / 2))}${'☆'.repeat(5 - Math.round(serie.avaliacao / 2))} ${serie.avaliacao}/10</span>` : ''}
                     ${serie.status ? `<span class="serie-status">${serie.status}</span>` : ''}
@@ -39,34 +42,46 @@ function renderizarSeries(series) {
     `).join('');
 }
 
-async function buscarSeries(query) {
-    if (!query.trim()) {
-        mostrarMensagem('Digite um nome para buscar', 'erro');
-        return;
+function filtrarSeries(termo) {
+    if (!termo.trim()) {
+        filtrados = [...todasSeries];
+    } else {
+        const t = termo.toLowerCase().trim();
+        filtrados = todasSeries.filter(serie =>
+            serie.titulo.toLowerCase().includes(t)
+        );
     }
-    try {
-        const url = `/api/series?q=${encodeURIComponent(query.trim())}`;
-        const resposta = await fetch(url);
-        if (!resposta.ok) {
-            const err = await resposta.json();
-            throw new Error(err.erro || 'Erro na busca');
-        }
-        const series = await resposta.json();
-        renderizarSeries(series);
-        if (series.length > 0) {
-            mostrarMensagem(`${series.length} série(s) encontrada(s) para "${query}"`, 'sucesso');
-        } else {
-            mostrarMensagem(`Nenhuma série encontrada para "${query}"`, 'erro');
-        }
-    } catch (erro) {
-        mostrarMensagem(`Erro ao buscar séries: ${erro.message}`, 'erro');
+    renderizarSeries(filtrados);
+    const total = todasSeries.length;
+    const exibindo = filtrados.length;
+    if (total > 0) {
+        mostrarMensagem(`Exibindo ${exibindo} de ${total} séries`, 'sucesso');
     }
 }
 
-btnBuscar.addEventListener('click', () => buscarSeries(campoBusca.value));
+async function carregarTodas() {
+    try {
+        listaSeries.innerHTML = '<div class="lista-vazia">Carregando catálogo...</div>';
+        const resposta = await fetch('/api/series/todas');
+        if (!resposta.ok) throw new Error('Erro ao carregar');
+        todasSeries = await resposta.json();
+        filtrarSeries('');
+    } catch (erro) {
+        mostrarMensagem(`Erro ao carregar séries: ${erro.message}`, 'erro');
+        listaSeries.innerHTML = '<div class="lista-vazia">Erro ao carregar catálogo. Tente recarregar a página.</div>';
+    }
+}
+
+btnBuscar.addEventListener('click', () => filtrarSeries(campoBusca.value));
 
 campoBusca.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') btnBuscar.click();
 });
 
-campoBusca.focus();
+campoBusca.addEventListener('input', () => {
+    if (campoBusca.value.trim() === '') {
+        filtrarSeries('');
+    }
+});
+
+carregarTodas();

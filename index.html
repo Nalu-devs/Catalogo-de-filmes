@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - Painel de Gerenciamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>📚 Gerenciamento de Biblioteca</h1>
+    </header>
+
+    <main>
+        <section class="painel">
+            <div class="card formulario-card">
+                <h2 id="formTitulo">Cadastrar Livro</h2>
+                <form id="livroForm">
+                    <input type="hidden" id="livroId">
+                    <input type="text" id="titulo" placeholder="Título" required>
+                    <input type="text" id="autor" placeholder="Autor" required>
+                    <input type="text" id="imagem" placeholder="URL da Imagem da Capa">
+                    <input type="text" id="categoria" placeholder="Categoria">
+                    <textarea id="descricao" placeholder="Descrição"></textarea>
+                    <input type="number" id="ano" placeholder="Ano">
+                    <input type="number" id="avaliacao" placeholder="Avaliação (1-5)" min="1" max="5">
+                    <div class="form-actions">
+                        <button type="submit" id="btnSalvar">Salvar</button>
+                        <button type="button" id="btnCancelar" class="btn-cancel" style="display:none">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card busca-card">
+                <h2>Buscar Livros</h2>
+                <div class="busca-container">
+                    <input type="text" id="campoBusca" placeholder="Buscar por título...">
+                    <button id="btnBuscar">Buscar</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="livros-section">
+            <div class="card">
+                <h2>Acervo</h2>
+                <div id="mensagem" class="mensagem"></div>
+                <div id="listaLivros" class="lista-livros"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -28,10 +28,7 @@ main {
     margin: 0 auto;
 }
 
-.painel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.busca-section {
     margin-bottom: 30px;
 }
 
@@ -50,75 +47,6 @@ main {
     color: #e94560;
     border-bottom: 2px solid rgba(233, 69, 96, 0.3);
     padding-bottom: 10px;
-}
-
-form input,
-form textarea {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 12px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #e0e0e0;
-    font-size: 0.95rem;
-    transition: all 0.3s;
-}
-
-form input:focus,
-form textarea:focus {
-    outline: none;
-    border-color: #e94560;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 0 12px rgba(233, 69, 96, 0.2);
-}
-
-form textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-form input::placeholder,
-form textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.form-actions {
-    display: flex;
-    gap: 10px;
-}
-
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-button[type="submit"],
-#btnSalvar {
-    background: #e94560;
-    color: white;
-    flex: 1;
-}
-
-button[type="submit"]:hover,
-#btnSalvar:hover {
-    background: #d63851;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
-}
-
-.btn-cancel {
-    background: rgba(255, 255, 255, 0.1);
-    color: #e0e0e0;
-}
-
-.btn-cancel:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .busca-container {
@@ -142,36 +70,22 @@ button[type="submit"]:hover,
 }
 
 #btnBuscar {
-    background: #0f3460;
+    background: #e94560;
     color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
     white-space: nowrap;
 }
 
 #btnBuscar:hover {
-    background: #1a4a7a;
+    background: #d63851;
     transform: translateY(-2px);
-}
-
-.btn-editar {
-    background: #0f3460;
-    color: white;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-}
-
-.btn-editar:hover {
-    background: #1a4a7a;
-}
-
-.btn-excluir {
-    background: rgba(233, 69, 96, 0.8);
-    color: white;
-    padding: 8px 16px;
-    font-size: 0.85rem;
-}
-
-.btn-excluir:hover {
-    background: #e94560;
+    box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
 }
 
 .mensagem {
@@ -196,13 +110,13 @@ button[type="submit"]:hover,
     border: 1px solid rgba(233, 69, 96, 0.3);
 }
 
-.lista-livros {
+.lista-series {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
 
-.livro-card {
+.serie-card {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -210,78 +124,95 @@ button[type="submit"]:hover,
     transition: all 0.3s;
 }
 
-.livro-card:hover {
+.serie-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     border-color: rgba(233, 69, 96, 0.4);
 }
 
-.livro-imagem {
+.serie-imagem-container {
     width: 100%;
-    height: 200px;
+    height: 300px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0f3460, #1a1a2e);
+}
+
+.serie-imagem {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
 
-.livro-imagem-placeholder {
+.serie-imagem-placeholder {
     width: 100%;
-    height: 200px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0f3460, #1a1a2e);
-    color: rgba(255, 255, 255, 0.3);
     font-size: 3rem;
+    color: rgba(255, 255, 255, 0.2);
 }
 
-.livro-info {
+.serie-info {
     padding: 16px;
 }
 
-.livro-info h3 {
+.serie-info h3 {
     font-size: 1.1rem;
     margin-bottom: 6px;
     color: #fff;
 }
 
-.livro-info .autor {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+.serie-ano {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 8px;
 }
 
-.livro-info .categoria {
+.serie-generos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.genero-tag {
     display: inline-block;
     background: rgba(233, 69, 96, 0.2);
     color: #e94560;
     padding: 2px 10px;
     border-radius: 12px;
     font-size: 0.8rem;
-    margin-bottom: 8px;
 }
 
-.livro-info .descricao {
+.serie-sinopse {
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.livro-info .ano {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 8px;
-}
-
-.livro-info .avaliacao {
-    color: #ffc107;
-    font-size: 0.9rem;
     margin-bottom: 12px;
+    line-height: 1.5;
 }
 
-.livro-actions {
+.serie-meta {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.serie-avaliacao {
+    color: #ffc107;
+}
+
+.serie-status {
+    background: rgba(46, 213, 115, 0.15);
+    color: #2ed573;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.serie-idioma {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .lista-vazia {
@@ -292,15 +223,15 @@ button[type="submit"]:hover,
 }
 
 @media (max-width: 768px) {
-    .painel {
-        grid-template-columns: 1fr;
-    }
-
     header h1 {
         font-size: 1.5rem;
     }
 
-    .lista-livros {
+    .lista-series {
         grid-template-columns: 1fr;
+    }
+
+    .serie-imagem-container {
+        height: 200px;
     }
 }
